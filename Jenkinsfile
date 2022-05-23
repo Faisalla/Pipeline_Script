@@ -1,49 +1,38 @@
 
 pipeline {
-    
-	agent {
-	label 'Windows_Node'
-	}
-
+    agent none
     stages {
 	
-	stage('Git-Checkout') {
-	    
-             steps {
-                echo "Checking out from Git Repo";
-                git 'https://github.com/Faisalla/Pipeline_Script.git'
+	stage('Non-Parallel Stage') {
+	    agent {
+                        label "master"
                 }
-        }
-	stage('Build') {
-	    
-             steps {
-                echo "Building the Checkout Project!";
-                bat 'Build.bat'
-                }
-        }
-	stage('Unit-Test') {
-	    
-             steps {
-                echo "Running JUnit Tests!";
-                bat 'Unit.bat'
+        steps {
+                echo 'This stage will be executed first'
                 }
         }
 
-	stage('Quality-Gate') {
-	    
-             steps {
-                echo "Verifying the Quality Gates!";
-                bat 'Quality.bat'
+	
+        stage('Run Tests') {
+            parallel {
+                stage('Test On Windows') {
+                    agent {
+                        label "Windows_Node"
+                    }
+                    steps {
+                        echo "Task1 on Agent"
+                    }
+                    
                 }
-        }
-
-	stage('Deploy') {
-	    
-             steps {
-                echo "Deploying to stage Environment for more tests!";
-                bat 'Deploy.bat'
+                stage('Test On Master') {
+                    agent {
+                        label "master"
+                    }
+                    steps {
+						echo "Task1 on Master"
+					}
                 }
+            }
         }
-}
-
+    }
 }
