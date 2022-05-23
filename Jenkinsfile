@@ -1,8 +1,7 @@
 pipeline {
     
-    agent {
-	label 'Windows_Node'
-	}
+    agent any
+
     stages {
 	
 	stage('Non-Parallel Stage') {
@@ -37,16 +36,21 @@ pipeline {
             }
         }
     }
-
+            stage('Git-Checkout') {
+	    
+             steps {
+                echo "Checking out from Git Repo";
+                git 'https://github.com/Faisalla/Pipeline_Script.git'
+                }
 	
-		stage('Build') {
+		    stage('Build') {
 	    
              steps {
                 echo "Building the Checkout Project!";
                 bat 'Build.bat'
                 }
         }
-	stage('Unit-Test') {
+	        stage('Unit-Test') {
 	    
              steps {
                 echo "Running JUnit Tests!";
@@ -54,7 +58,7 @@ pipeline {
                 }
         }
 
-	stage('Quality-Gate') {
+	        stage('Quality-Gate') {
 	    
              steps {
                 echo "Verifying the Quality Gates!";
@@ -62,12 +66,14 @@ pipeline {
                 }
         }
 
-	stage('Deploy') {
+	        stage('Deploy') {
 	    
              steps {
                 echo "Deploying to stage Environment for more tests!";
                 bat 'Deploy.bat'
                 }
         }
+}
+
 }
 
