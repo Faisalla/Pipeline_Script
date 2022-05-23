@@ -1,5 +1,7 @@
 pipeline {
-    agent none
+    agent {
+	label 'Windows_Node'
+	}
     stages {
 	
 	stage('Non-Parallel Stage') {
@@ -36,7 +38,9 @@ pipeline {
     }
 
     
-	agent Windows_Node
+	agent {
+	label 'Windows_Node'
+	}
 
     stages {
 	
