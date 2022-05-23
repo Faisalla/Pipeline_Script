@@ -1,56 +1,27 @@
+
 pipeline {
     
-    agent any
+	agent {
+	label 'Windows_Node'
+	}
 
     stages {
 	
-	stage('Non-Parallel Stage') {
-	    agent {
-                        label "master"
-                }
-        steps {
-                echo 'This stage will be executed first'
-                }
-        }
-
-	
-        stage('Run Tests') {
-            parallel {
-                stage('Test On Windows') {
-                    agent {
-                        label "Windows_Node"
-                    }
-                    steps {
-                        echo "Task1 on Agent"
-                    }
-                    
-                }
-                stage('Test On Master') {
-                    agent {
-                        label "master"
-                    }
-                    steps {
-						echo "Task1 on Master"
-					}
-                    stage('Git-Checkout') {
+	stage('Git-Checkout') {
 	    
              steps {
                 echo "Checking out from Git Repo";
-                git 'https://github.com/Faisalla/Pipeline_Script.git'
+                git 'https://github.com/simplilearn-github/Pipeline_Script.git'
                 }
-        }  
-                }
-            }
-             
-           	
-		    stage('Build') {
+        }
+	stage('Build') {
 	    
              steps {
                 echo "Building the Checkout Project!";
                 bat 'Build.bat'
                 }
         }
-	        stage('Unit-Test') {
+	stage('Unit-Test') {
 	    
              steps {
                 echo "Running JUnit Tests!";
@@ -58,7 +29,7 @@ pipeline {
                 }
         }
 
-	        stage('Quality-Gate') {
+	stage('Quality-Gate') {
 	    
              steps {
                 echo "Verifying the Quality Gates!";
@@ -66,17 +37,37 @@ pipeline {
                 }
         }
 
-	        stage('Deploy') {
+	stage('Deploy') {
 	    
              steps {
                 echo "Deploying to stage Environment for more tests!";
                 bat 'Deploy.bat'
                 }
         }
-        }
-    }
-            	
-	
 }
 
 
+post {		
+		always {
+		echo 'This will always run'
+		}
+
+		success {
+		echo 'This will run only if successful'
+		}
+		
+		failure {
+		    echo 'This will run only if failed'
+		}
+		
+		unstable {
+		    echo 'This will run only if the run was marked as unstable'
+		}
+
+		changed {
+		    echo 'This will run only if the state of the pipeline has changed'
+		    echo 'For example, if the Pipelline was previously failing but is now successful'
+		}
+	    }
+
+	}
