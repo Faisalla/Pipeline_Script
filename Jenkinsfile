@@ -32,15 +32,16 @@ pipeline {
                     steps {
 						echo "Task1 on Master"
 					}
-                }
-            }
-            stage('Git-Checkout') {
+                    stage('Git-Checkout') {
 	    
              steps {
                 echo "Checking out from Git Repo";
                 git 'https://github.com/Faisalla/Pipeline_Script.git'
                 }
-        }   
+        }  
+                }
+            }
+             
            	
 		    stage('Build') {
 	    
