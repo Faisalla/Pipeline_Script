@@ -34,10 +34,7 @@ pipeline {
 					}
                 }
             }
-        }
-    }
-            	
-	stage('Git-Checkout') {
+            stage('Git-Checkout') {
 	    
              steps {
                 echo "Checking out from Git Repo";
@@ -75,6 +72,10 @@ pipeline {
                 bat 'Deploy.bat'
                 }
         }
+        }
+    }
+            	
+	
 }
 
 
