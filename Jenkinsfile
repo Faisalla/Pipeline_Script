@@ -36,8 +36,7 @@ pipeline {
             }
         }
     }
-             stages {
-	
+            	
 	stage('Git-Checkout') {
 	    
              steps {
@@ -45,11 +44,7 @@ pipeline {
                 git 'https://github.com/Faisalla/Pipeline_Script.git'
                 }
         }   
-             steps {
-                echo "Checking out from Git Repo";
-                git 'https://github.com/Faisalla/Pipeline_Script.git'
-                }
-	
+           	
 		    stage('Build') {
 	    
              steps {
@@ -82,4 +77,4 @@ pipeline {
         }
 }
 
-}
+
