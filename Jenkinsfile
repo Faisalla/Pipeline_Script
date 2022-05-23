@@ -35,11 +35,9 @@ pipeline {
                 }
             }
         }
-    }
 
     
-    stages {
-	
+ 	
 	stage('Git-Checkout') {
 	    
              steps {
