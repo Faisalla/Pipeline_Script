@@ -36,9 +36,7 @@ pipeline {
     }
 
     
-	agent {
-	label 'Windows_Node'
-	}
+	agent Windows_Node
 
     stages {
 	
