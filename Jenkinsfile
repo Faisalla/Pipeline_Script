@@ -38,10 +38,6 @@ pipeline {
     }
 
     
-	agent {
-	label 'Windows_Node'
-	}
-
     stages {
 	
 	stage('Git-Checkout') {
