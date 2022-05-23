@@ -1,4 +1,5 @@
 pipeline {
+    
     agent {
 	label 'Windows_Node'
 	}
@@ -35,14 +36,14 @@ pipeline {
                 }
             }
         }
+    }
 
-    
- 	
+	
 	stage('Git-Checkout') {
 	    
              steps {
                 echo "Checking out from Git Repo";
-                git 'https://github.com/simplilearn-github/Pipeline_Script.git'
+                git 'https://github.com/Faisalla/Pipeline_Script.git'
                 }
         }
 	stage('Build') {
@@ -77,5 +78,3 @@ pipeline {
         }
 }
 
-
-}
